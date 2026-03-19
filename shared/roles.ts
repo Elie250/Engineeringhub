@@ -5,9 +5,15 @@ export const UserRoles = {
   SALES: 'sales',
 } as const;
 
-export function canAccessPlatform(role: string | null | undefined, platform: 'web' | 'mobile') {
+export type UserRole = typeof UserRoles[keyof typeof UserRoles];
+
+export function canAccessPlatform(role: string | null | undefined, platform: 'web' | 'mobile'): boolean {
   if (!role) return false;
-  if (role === UserRoles.ADMIN || role === UserRoles.INSTRUCTOR) return platform === 'web';
-  if (role === UserRoles.STUDENT || role === UserRoles.SALES) return true;
+  if (role === UserRoles.ADMIN || role === UserRoles.INSTRUCTOR) {
+    return platform === 'web';
+  }
+  if (role === UserRoles.STUDENT || role === UserRoles.SALES) {
+    return true;
+  }
   return false;
 }
